@@ -2,6 +2,11 @@ class PhotosController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :resize_image, only: [:create]
 
+  def index
+    @photos = Photo.all
+    render json: @photos.collect {|t| photo_to_hash t }
+  end
+
   def create
     photo = Photo.new(photo_params)
 
